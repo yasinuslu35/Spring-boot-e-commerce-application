@@ -44,6 +44,10 @@ public class Product {
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
+	@ManyToOne
+	@JoinColumn(name = "brand_id")
+	private Brand brand;
+	
     @ManyToMany
     @JoinTable(
         name = "products_suppliers",
