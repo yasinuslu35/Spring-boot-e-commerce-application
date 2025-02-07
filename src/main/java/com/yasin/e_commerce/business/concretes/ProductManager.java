@@ -11,6 +11,7 @@ import com.yasin.e_commerce.core.utilities.results.SuccessDataResult;
 import com.yasin.e_commerce.core.utilities.results.SuccessResult;
 import com.yasin.e_commerce.dao.abstracts.ProductDao;
 import com.yasin.e_commerce.entities.concretes.Product;
+import com.yasin.e_commerce.entities.dto.ProductWithBrandDto;
 import com.yasin.e_commerce.entities.dto.ProductWithCategoryDto;
 
 @Service
@@ -54,6 +55,12 @@ public class ProductManager implements ProductService {
 		
 		return new SuccessDataResult<List<ProductWithCategoryDto>>(productDao.getProductWithCategoryDetails(), 
 				"Filtreli Ürünler başarıyla listelendi");
+	}
+
+	@Override
+	public DataResult<List<ProductWithBrandDto>> findAllByProductName(String productName) {
+		return new SuccessDataResult<List<ProductWithBrandDto>>
+		(productDao.findProductsByBrandName(productName),productName + "markasına ait");
 	}
 
 }

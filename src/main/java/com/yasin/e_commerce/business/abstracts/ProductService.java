@@ -5,6 +5,7 @@ import java.util.List;
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
 import com.yasin.e_commerce.entities.concretes.Product;
+import com.yasin.e_commerce.entities.dto.ProductWithBrandDto;
 import com.yasin.e_commerce.entities.dto.ProductWithCategoryDto;
 
 public interface ProductService {
@@ -17,6 +18,8 @@ public interface ProductService {
 	DataResult<List<Product>> getAllSorted();
 	
 	DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails();
+	
+	DataResult<List<ProductWithBrandDto>> findAllByProductName(String productName);
 	
 
 }

@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yasin.e_commerce.business.abstracts.ProductService;
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
 import com.yasin.e_commerce.entities.concretes.Product;
+import com.yasin.e_commerce.entities.dto.ProductWithBrandDto;
 import com.yasin.e_commerce.entities.dto.ProductWithCategoryDto;
 
 
@@ -35,6 +37,12 @@ public class ProductsController {
 	@GetMapping("/getProductWithCategoryDetails")
 	public DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails() {
 		return this.productService.getProductWithCategoryDetails();
+	}
+	
+	@GetMapping("/findProductsByBrandName")
+	public DataResult<List<ProductWithBrandDto>> findProductsByBrandName
+	(@RequestParam String brandName) {
+		return this.productService.findAllByProductName(brandName);
 	}
 	
 	@PostMapping("/add")
