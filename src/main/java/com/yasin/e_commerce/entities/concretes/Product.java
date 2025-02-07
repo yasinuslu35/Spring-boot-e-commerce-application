@@ -28,7 +28,7 @@ public class Product {
 	@Column(name = "product_id")
 	private long id;
 	
-	@Column(name = "product_name")
+	@Column(name = "product_name",nullable = false)
 	private String productName;
 	
 	@Column(name = "quantity_per_unit")
@@ -37,15 +37,15 @@ public class Product {
 	@Column(name = "unit_price")
 	private double unitPrice;
 	
-	@Column(name = "units_in_stock")
+	@Column(name = "units_in_stock", nullable = false)
 	private long unitsInStock;
 	
 	@ManyToOne
-	@JoinColumn(name = "category_id")
+	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 	
 	@ManyToOne
-	@JoinColumn(name = "brand_id")
+	@JoinColumn(name = "brand_id", nullable = false)
 	private Brand brand;
 	
     @ManyToMany
