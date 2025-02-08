@@ -13,6 +13,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,16 +31,21 @@ public class Product {
 	private long id;
 	
 	@Column(name = "product_name",nullable = false)
+	@NotNull
 	private String productName;
 	
 	@Column(name = "quantity_per_unit")
 	private String quantityPerUnit;
 	
 	@Column(name = "unit_price")
-	private double unitPrice;
+	@NotNull
+	@NotBlank
+	private Double unitPrice;
 	
 	@Column(name = "units_in_stock", nullable = false)
-	private long unitsInStock;
+	@NotNull
+	@NotBlank
+	private Long unitsInStock;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false)

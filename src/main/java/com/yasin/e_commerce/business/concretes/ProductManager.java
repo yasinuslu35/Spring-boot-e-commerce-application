@@ -66,19 +66,30 @@ public class ProductManager implements ProductService {
 	    try {
 	        // 1️⃣ VALIDASYON: Marka ismi boş mu?
 	        if (product.getProductName() == null || product.getProductName().trim().isEmpty()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult("Marka adı boş olamaz!"));
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body
+	            		(new ErrorResult("Marka adı boş olamaz!"));
 	        }
 
 	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
-	        Optional<Product> existingBrand = productDao.findByProductName(product.getProductName().trim());
-
-	        if (existingBrand.isPresent()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult("Bu isimde bir marka zaten mevcut"));
+	        Optional<Product> existingProductName = productDao.findByProductName
+	        		(product.getProductName().trim());
+	 
+	        System.out.println("supplier sayısı = "+ product.getSuppliers().size());
+	        
+	        if (existingProductName.isPresent()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body
+	            		(new ErrorResult("Bu isimde bir marka zaten mevcut"));
 	        }
-
+	        
+	        
+	        else if(product.getSuppliers().size() == 0) {
+	        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body
+	        			(new ErrorResult("Ürünün en az 1 adet tedarikçisi olmalı"));
+	        }
 	        // 3️⃣ Veritabanına kayıt işlemi
 	        productDao.save(product);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResult("Marka başarıyla eklendi!"));
+	        return ResponseEntity.status(HttpStatus.CREATED).body(
+	        		new SuccessResult("Marka başarıyla eklendi!"));
 
 	    } catch (Exception e) {
 	        // 🛑 Beklenmeyen hata varsa fırlat
