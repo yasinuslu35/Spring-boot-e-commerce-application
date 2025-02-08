@@ -2,6 +2,7 @@ package com.yasin.e_commerce.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,12 +26,12 @@ public class SupplierController {
 	}
 	
 	@GetMapping("/getall")
-	public DataResult<List<Supplier>> getAll() {
+	public ResponseEntity<DataResult<List<Supplier>>> getAll() {
 		return this.supplierService.getAll();
 	}
 
 	@PostMapping("/add")
-	public Result add(@RequestBody Supplier supplier) {
+	public ResponseEntity<Result> add(@RequestBody Supplier supplier) {
 		return this.supplierService.add(supplier);
 	}
 	

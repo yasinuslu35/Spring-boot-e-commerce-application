@@ -2,6 +2,7 @@ package com.yasin.e_commerce.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,23 +31,24 @@ public class ProductsController {
 	}
 
 	@GetMapping("/getall")
-	public DataResult<List<Product>> getAll() {
+	public ResponseEntity<DataResult<List<Product>>> getAll() {
 		return this.productService.getAll();
 	}
 	
 	@GetMapping("/getProductWithCategoryDetails")
-	public DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails() {
+	public ResponseEntity<DataResult<List<ProductWithCategoryDto>>> 
+	getProductWithCategoryDetails() {
 		return this.productService.getProductWithCategoryDetails();
 	}
 	
 	@GetMapping("/findProductsByBrandName")
-	public DataResult<List<ProductWithBrandDto>> findProductsByBrandName
+	public ResponseEntity<DataResult<List<ProductWithBrandDto>>> findProductsByBrandName
 	(@RequestParam String brandName) {
 		return this.productService.findAllByProductName(brandName);
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody Product product) {
+	public ResponseEntity<Result> add(@RequestBody Product product) {
 		return this.productService.add(product);
 	}
 	

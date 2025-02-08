@@ -1,11 +1,13 @@
 package com.yasin.e_commerce.dao.abstracts;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.yasin.e_commerce.entities.concretes.Brand;
 import com.yasin.e_commerce.entities.concretes.Product;
 import com.yasin.e_commerce.entities.dto.ProductWithBrandDto;
 import com.yasin.e_commerce.entities.dto.ProductWithCategoryDto;
@@ -13,6 +15,8 @@ import com.yasin.e_commerce.entities.dto.ProductWithCategoryDto;
 
 
 public interface ProductDao extends JpaRepository<Product, Long> {
+	
+	Optional<Product> findByProductName(String productName);
 	
 	
 	@Query("Select new com.yasin.e_commerce.entities.dto.ProductWithCategoryDto"

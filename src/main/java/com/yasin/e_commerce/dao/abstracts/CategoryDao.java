@@ -9,5 +9,5 @@ import com.yasin.e_commerce.entities.concretes.Category;
 
 public interface CategoryDao extends JpaRepository<Category, Long> {
 
-	Optional<Brand> findByCategoryName(String brandName);
+	Optional<Brand> findByCategoryName(String categoryName);
 }
