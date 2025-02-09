@@ -26,11 +26,11 @@ public class SellerProduct {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "seller_id")
+	@JoinColumn(name = "seller_id",nullable = false)
 	private Seller seller;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@JoinColumn(name = "product_id",nullable = false)
 	private Product product;
 	
 	@Column(name = "quantity_per_unit")

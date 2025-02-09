@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.yasin.e_commerce.entities.concretes.Seller;
 
-public interface SupplierDao extends JpaRepository<Seller, Long> {
+public interface SellerDao extends JpaRepository<Seller, Long> {
 
 	Optional<Seller> findByCompanyName(String companyName);
 	

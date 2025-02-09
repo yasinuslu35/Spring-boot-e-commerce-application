@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.yasin.e_commerce.business.abstracts.SupplierService;
+import com.yasin.e_commerce.business.abstracts.SellerService;
 import com.yasin.e_commerce.core.utilities.exceptions.BusinessException;
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.ErrorDataResult;
@@ -15,36 +15,36 @@ import com.yasin.e_commerce.core.utilities.results.ErrorResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
 import com.yasin.e_commerce.core.utilities.results.SuccessDataResult;
 import com.yasin.e_commerce.core.utilities.results.SuccessResult;
-import com.yasin.e_commerce.dao.abstracts.SupplierDao;
+import com.yasin.e_commerce.dao.abstracts.SellerDao;
 import com.yasin.e_commerce.entities.concretes.Seller;
 
 @Service
-public class SupplierManager implements SupplierService {
+public class SellerManager implements SellerService {
 	
-	private SupplierDao supplierDao;
+	private SellerDao sellerDao;
 	
-	public SupplierManager(SupplierDao supplierDao) {
+	public SellerManager(SellerDao sellerDao) {
 		super();
-		this.supplierDao = supplierDao;
+		this.sellerDao = sellerDao;
 	}
 
 	@Override
 	public ResponseEntity<DataResult<List<Seller>>> getAll() {
 		
-		List<Seller> suppliers = supplierDao.findAll();
+		List<Seller> suppliers = sellerDao.findAll();
 		
 		if(suppliers.isEmpty()) {
 			return ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
 					.body(new ErrorDataResult<List<Seller>>
-					(this.supplierDao.findAll(),"Hiç Ürün Bulunamadı"));
+					(this.sellerDao.findAll(),"Hiç Ürün Bulunamadı"));
 					
 		}
 
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(new SuccessDataResult<List<Seller>>
-				(this.supplierDao.findAll(),"Ürünler listelendi"));
+				(this.sellerDao.findAll(),"Ürünler listelendi"));
 	}
 
 	@Override
@@ -56,14 +56,14 @@ public class SupplierManager implements SupplierService {
 	        }
 
 	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
-	        Optional<Seller> existingBrand = supplierDao.findByCompanyName(supplier.getCompanyName().trim());
+	        Optional<Seller> existingBrand = sellerDao.findByCompanyName(supplier.getCompanyName().trim());
 
 	        if (existingBrand.isPresent()) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult("Bu isimde bir marka zaten mevcut"));
 	        }
 
 	        // 3️⃣ Veritabanına kayıt işlemi
-	        supplierDao.save(supplier);
+	        sellerDao.save(supplier);
 	        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResult("Marka başarıyla eklendi!"));
 
 	    } catch (Exception e) {
