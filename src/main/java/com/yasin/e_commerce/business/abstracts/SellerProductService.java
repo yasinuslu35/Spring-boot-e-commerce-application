@@ -6,12 +6,12 @@ import org.springframework.http.ResponseEntity;
 
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
-import com.yasin.e_commerce.entities.concretes.SellerProduct;
+import com.yasin.e_commerce.entities.dto.SellerProductDto;
 
 public interface SellerProductService {
 	
-	ResponseEntity<DataResult<List<SellerProduct>>> getAll();
+	ResponseEntity<DataResult<List<SellerProductDto>>> getAll();
 	
-	ResponseEntity<Result> add(SellerProduct sellerProduct);
+	ResponseEntity<Result> add(SellerProductDto sellerProductDto);
 
 }

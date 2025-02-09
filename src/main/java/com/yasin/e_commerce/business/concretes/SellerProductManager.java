@@ -1,8 +1,9 @@
 package com.yasin.e_commerce.business.concretes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import com.yasin.e_commerce.dao.abstracts.ProductDao;
 import com.yasin.e_commerce.dao.abstracts.SellerDao;
 import com.yasin.e_commerce.dao.abstracts.SellerProductDao;
 import com.yasin.e_commerce.entities.concretes.SellerProduct;
+import com.yasin.e_commerce.entities.dto.SellerProductDto;
 
 
 @Service
@@ -26,39 +28,67 @@ public class SellerProductManager implements SellerProductService {
 	private final SellerProductDao sellerProductDao;
 	private final ProductDao productDao;
 	private final SellerDao sellerDao;
+	private ModelMapper modelMapper;
 	
-	@Autowired
+
 	public SellerProductManager(SellerProductDao sellerProductDao
 			,ProductDao productDao
-			,SellerDao sellerDao) {
+			,SellerDao sellerDao,
+			ModelMapper modelMapper) {
 		super();
 		this.sellerProductDao = sellerProductDao;
 		this.productDao = productDao;
 		this.sellerDao = sellerDao;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
-	public ResponseEntity<DataResult<List<SellerProduct>>> getAll() {
+	public ResponseEntity<DataResult<List<SellerProductDto>>> getAll() {
 
-		List<SellerProduct> sellerProduct = sellerProductDao.findAll();
 		
-		if(sellerProduct.isEmpty()) {
+		
+		
+		List<SellerProduct> sellerProducts = sellerProductDao.findAll();
+		
+	    List<SellerProductDto> sellerProductDtos = sellerProducts.stream()
+	            .map(sellerProduct -> modelMapper.map(sellerProduct, SellerProductDto.class))
+	            .collect(Collectors.toList());
+		
+		if(sellerProductDtos.isEmpty()) {
 			return ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
-					.body(new ErrorDataResult<List<SellerProduct>>
-					(this.sellerProductDao.findAll(),"Hiç Ürün Bulunamadı"));
+					.body(new ErrorDataResult<List<SellerProductDto>>
+					(sellerProductDtos,"Hiç Ürün Bulunamadı"));
 					
 		}
 
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(new SuccessDataResult<List<SellerProduct>>
-				(this.sellerProductDao.findAll(),"Ürünler listelendi"));
+				.body(new SuccessDataResult<List<SellerProductDto>>
+				(sellerProductDtos,"Ürünler listelendi"));
 	}
 
 	@Override
-	public ResponseEntity<Result> add(SellerProduct sellerProduct) {
+	public ResponseEntity<Result> add(SellerProductDto sellerProductDto) {
 	    try {
+	        var seller = sellerDao.findByCompanyName(sellerProductDto.getSellerName())
+	                .orElseThrow(() -> new BusinessException
+	                		("Satıcı bulunamadı! ismi: " + sellerProductDto.getSellerName()));
+
+	        var product = productDao.findByProductName(sellerProductDto.getProductName())
+	                .orElseThrow(() -> new BusinessException
+	                		("Ürün bulunamadı! ismi: " + sellerProductDto.getProductName()));
+
+	        
+	            // Yeni SellerProduct nesnesi oluşturup gerekli verileri setliyoruz
+	            SellerProduct sellerProduct = new SellerProduct();
+	            sellerProduct.setSeller(seller);
+	            sellerProduct.setProduct(product);
+	            sellerProduct.setQuantityPerUnit(sellerProductDto.getQuantityPerUnit());
+	            sellerProduct.setUnitPrice(sellerProductDto.getUnitPrice());
+	            sellerProduct.setUnitsInStock(sellerProductDto.getUnitsInStock());
+	        
+
 	        sellerProductDao.save(sellerProduct);
 	        return ResponseEntity.status(HttpStatus.CREATED).body(
 	        		new SuccessResult("Marka başarıyla eklendi!"));
