@@ -16,6 +16,7 @@ import com.yasin.e_commerce.core.utilities.results.Result;
 import com.yasin.e_commerce.core.utilities.results.SuccessDataResult;
 import com.yasin.e_commerce.core.utilities.results.SuccessResult;
 import com.yasin.e_commerce.dao.abstracts.ProductDao;
+import com.yasin.e_commerce.dao.abstracts.SellerProductDao;
 import com.yasin.e_commerce.entities.concretes.Product;
 import com.yasin.e_commerce.entities.dto.ProductWithBrandDto;
 import com.yasin.e_commerce.entities.dto.ProductWithCategoryDto;
@@ -25,7 +26,7 @@ public class ProductManager implements ProductService {
 	
 	private ProductDao productDao;
 	
-	public ProductManager(ProductDao productDao) {
+	public ProductManager(ProductDao productDao, SellerProductDao sellerProductDao) {
 		super();
 		this.productDao = productDao;
 	}
@@ -64,7 +65,6 @@ public class ProductManager implements ProductService {
 	@Override
 	public ResponseEntity<Result> add(Product product) {
 	    try {
-	        // 1️⃣ VALIDASYON: Marka ismi boş mu?
 	        if (product.getProductName() == null || product.getProductName().trim().isEmpty()) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body
 	            		(new ErrorResult("Marka adı boş olamaz!"));
@@ -73,20 +73,12 @@ public class ProductManager implements ProductService {
 	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
 	        Optional<Product> existingProductName = productDao.findByProductName
 	        		(product.getProductName().trim());
-	 
-	        System.out.println("supplier sayısı = "+ product.getSuppliers().size());
-	        
+	      
 	        if (existingProductName.isPresent()) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body
 	            		(new ErrorResult("Bu isimde bir marka zaten mevcut"));
 	        }
 	        
-	        
-	        else if(product.getSuppliers().size() == 0) {
-	        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body
-	        			(new ErrorResult("Ürünün en az 1 adet tedarikçisi olmalı"));
-	        }
-	        // 3️⃣ Veritabanına kayıt işlemi
 	        productDao.save(product);
 	        return ResponseEntity.status(HttpStatus.CREATED).body(
 	        		new SuccessResult("Marka başarıyla eklendi!"));

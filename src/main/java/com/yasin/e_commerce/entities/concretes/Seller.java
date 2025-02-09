@@ -1,16 +1,15 @@
 package com.yasin.e_commerce.entities.concretes;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,33 +19,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "suppliers")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","products"})
-public class Supplier {
+@Table(name = "sellers")
+public class Seller {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "supplier_id")
-	private long supplierId;
+	@Column(name = "seller_id")
+	private long sellerId;
 	
 	@Column(name = "company_name",nullable = false)
 	private String companyName;
-	
-	@Column(name = "contact_name",nullable = false)
-	private String contactName;
-	
-	@Column(name = "contact_title",nullable = false)
-	private String contactTitle;
-	
+		
 	@Column(name = "company_address")
 	private String companyAddress;
 	
 	@Column(name = "city",nullable = false)
 	private String city;
-	
-	@Column(name = "company_region")
-	private String companyRegion;
-	
+		
 	@Column(name = "company_country",nullable = false)
 	private String companyCountry;
 	
@@ -56,8 +45,7 @@ public class Supplier {
 	@Column(name = "company_homepage")
 	private String companyHomePage;
 	
-	
-    @ManyToMany(mappedBy = "suppliers")
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "seller",cascade = CascadeType.ALL)
+    private List<SellerProduct> sellerProducts = new ArrayList<>();
 	
 }

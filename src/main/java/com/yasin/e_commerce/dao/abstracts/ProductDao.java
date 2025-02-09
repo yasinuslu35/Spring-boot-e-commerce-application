@@ -17,16 +17,16 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 	
 	Optional<Product> findByProductName(String productName);
 	
-	Optional<List<Product>> findBySuppliers_CompanyName(String companyName);
+	//Optional<List<Product>> findBySuppliers_CompanyName(String companyName);
 	
 	
 	@Query("Select new com.yasin.e_commerce.entities.dto.ProductWithCategoryDto"
-			+ "(p.id, p.productName, p.unitPrice, p.unitsInStock ,c.categoryName, s.companyName)"
-			+ " From Category c Inner Join c.products p Inner Join p.suppliers s")
+			+ "(p.id, p.productName, c.categoryName)"
+			+ " From Category c Inner Join c.products p")
 	List<ProductWithCategoryDto> getProductWithCategoryDetails();
 	
 	@Query("SELECT new com.yasin.e_commerce.entities.dto.ProductWithBrandDto "
-			+ "(p.productName, p.brand.brandName, p.unitPrice) "+
+			+ "(p.productName, p.brand.brandName) "+
 			"FROM Product p WHERE p.brand.brandName = :brandName")
 	List<ProductWithBrandDto> findProductsByBrandName(@Param("brandName") String brandName);
 

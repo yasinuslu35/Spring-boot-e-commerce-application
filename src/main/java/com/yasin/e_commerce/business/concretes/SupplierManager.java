@@ -16,7 +16,7 @@ import com.yasin.e_commerce.core.utilities.results.Result;
 import com.yasin.e_commerce.core.utilities.results.SuccessDataResult;
 import com.yasin.e_commerce.core.utilities.results.SuccessResult;
 import com.yasin.e_commerce.dao.abstracts.SupplierDao;
-import com.yasin.e_commerce.entities.concretes.Supplier;
+import com.yasin.e_commerce.entities.concretes.Seller;
 
 @Service
 public class SupplierManager implements SupplierService {
@@ -29,26 +29,26 @@ public class SupplierManager implements SupplierService {
 	}
 
 	@Override
-	public ResponseEntity<DataResult<List<Supplier>>> getAll() {
+	public ResponseEntity<DataResult<List<Seller>>> getAll() {
 		
-		List<Supplier> suppliers = supplierDao.findAll();
+		List<Seller> suppliers = supplierDao.findAll();
 		
 		if(suppliers.isEmpty()) {
 			return ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
-					.body(new ErrorDataResult<List<Supplier>>
+					.body(new ErrorDataResult<List<Seller>>
 					(this.supplierDao.findAll(),"Hiç Ürün Bulunamadı"));
 					
 		}
 
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(new SuccessDataResult<List<Supplier>>
+				.body(new SuccessDataResult<List<Seller>>
 				(this.supplierDao.findAll(),"Ürünler listelendi"));
 	}
 
 	@Override
-	public ResponseEntity<Result> add(Supplier supplier) {
+	public ResponseEntity<Result> add(Seller supplier) {
 	    try {
 	        // 1️⃣ VALIDASYON: Marka ismi boş mu?
 	        if (supplier.getCompanyName() == null || supplier.getCompanyName().trim().isEmpty()) {
@@ -56,7 +56,7 @@ public class SupplierManager implements SupplierService {
 	        }
 
 	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
-	        Optional<Supplier> existingBrand = supplierDao.findByCompanyName(supplier.getCompanyName().trim());
+	        Optional<Seller> existingBrand = supplierDao.findByCompanyName(supplier.getCompanyName().trim());
 
 	        if (existingBrand.isPresent()) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult("Bu isimde bir marka zaten mevcut"));

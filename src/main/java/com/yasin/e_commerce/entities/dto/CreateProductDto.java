@@ -27,5 +27,18 @@ public class CreateProductDto {
 	@NotBlank
 	private Long unitsInStock;
 	
+	@NotNull
+	@NotBlank
+	private String categoryName;
+	
+	@NotNull
+	@NotBlank
+	private String brandName;
+	
+	@NotNull
+	@NotBlank
+	private String supplierName;
+	
+	
 
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yasin.e_commerce.business.abstracts.SupplierService;
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
-import com.yasin.e_commerce.entities.concretes.Supplier;
+import com.yasin.e_commerce.entities.concretes.Seller;
 
 @RestController
 @RequestMapping("/api/suppliers")
@@ -26,13 +26,13 @@ public class SupplierController {
 	}
 	
 	@GetMapping("/getall")
-	public ResponseEntity<DataResult<List<Supplier>>> getAll() {
+	public ResponseEntity<DataResult<List<Seller>>> getAll() {
 		return this.supplierService.getAll();
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Result> add(@RequestBody Supplier supplier) {
-		return this.supplierService.add(supplier);
+	public ResponseEntity<Result> add(@RequestBody Seller seller) {
+		return this.supplierService.add(seller);
 	}
 	
 	

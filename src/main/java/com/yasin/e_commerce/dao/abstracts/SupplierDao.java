@@ -4,9 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.yasin.e_commerce.entities.concretes.Supplier;
+import com.yasin.e_commerce.entities.concretes.Seller;
 
-public interface SupplierDao extends JpaRepository<Supplier, Long> {
+public interface SupplierDao extends JpaRepository<Seller, Long> {
 
-	Optional<Supplier> findByCompanyName(String companyName);
+	Optional<Seller> findByCompanyName(String companyName);
+	
 }

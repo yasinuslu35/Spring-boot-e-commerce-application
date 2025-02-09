@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
-import com.yasin.e_commerce.entities.concretes.Supplier;
+import com.yasin.e_commerce.entities.concretes.Seller;
 
 public interface SupplierService {
-	ResponseEntity<DataResult<List<Supplier>>> getAll();
+	ResponseEntity<DataResult<List<Seller>>> getAll();
 	
-	ResponseEntity<Result> add(Supplier supplier);
+	ResponseEntity<Result> add(Seller seller);
 
 }

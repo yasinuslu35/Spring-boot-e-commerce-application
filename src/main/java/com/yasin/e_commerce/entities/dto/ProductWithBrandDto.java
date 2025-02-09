@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ProductWithBrandDto {
 	private String ProductName;
 	private String BrandName;
-	private double unitPrice;
+	//private double unitPrice;
 	
 
 }
