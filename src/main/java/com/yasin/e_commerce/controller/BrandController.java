@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yasin.e_commerce.business.abstracts.BrandService;
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
-import com.yasin.e_commerce.entities.concretes.Brand;
+import com.yasin.e_commerce.entities.dto.requestes.BrandRequestDto;
+import com.yasin.e_commerce.entities.dto.responses.BrandResponseDto;
 
 @RestController
 @RequestMapping("/api/brands")
@@ -26,13 +27,13 @@ public class BrandController {
 	}
 
 	@GetMapping("/getall")
-	public ResponseEntity<DataResult<List<Brand>>> getAllBrands() {
+	public ResponseEntity<DataResult<List<BrandResponseDto>>> getAllBrands() {
 		return brandService.getAll();
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Result> addBrand(@RequestBody Brand brand) {
-		return brandService.add(brand);
+	public ResponseEntity<Result> addBrand(@RequestBody BrandRequestDto brandRequestDto) {
+		return brandService.add(brandRequestDto);
 	}
 
 }

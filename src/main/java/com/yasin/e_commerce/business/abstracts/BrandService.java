@@ -6,11 +6,12 @@ import org.springframework.http.ResponseEntity;
 
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
-import com.yasin.e_commerce.entities.concretes.Brand;
+import com.yasin.e_commerce.entities.dto.requestes.BrandRequestDto;
+import com.yasin.e_commerce.entities.dto.responses.BrandResponseDto;
 
 public interface BrandService {
-	ResponseEntity<DataResult<List<Brand>>> getAll();
+	ResponseEntity<DataResult<List<BrandResponseDto>>> getAll();
 	
-	ResponseEntity<Result> add(Brand brand);
+	ResponseEntity<Result> add(BrandRequestDto brandRequestDto);
 
 }
