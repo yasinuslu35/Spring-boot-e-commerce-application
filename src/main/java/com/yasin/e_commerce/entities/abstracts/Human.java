@@ -22,7 +22,7 @@ public abstract class Human {
 	@Column(name = "last_name",nullable = false)
 	private String lastName;
 	
-	@Column(name = "birth_date",nullable = false)
+	@Column(name = "birth_date")
 	private Date birthDate;
 	
 	@Column(name = "address")
