@@ -1,7 +1,10 @@
 package com.yasin.e_commerce.entities.concretes;
 
+import java.util.Date;
 import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.yasin.e_commerce.entities.Role;
@@ -39,14 +42,24 @@ public class User extends Human implements UserDetails {
 	
 	private String name;
 	
+	@Column(nullable = false,unique = true)
 	private String username;
 	
+	@Column(nullable = false)
 	private String password;
 	
 	private boolean accountNonExpired;
 	private boolean isEnabled;
 	private boolean accountNonLocked;
 	private boolean credentialsNonExpired;
+	
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 	
 	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	@JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
