@@ -1,4 +1,4 @@
-package com.yasin.e_commerce.entities.dto;
+package com.yasin.e_commerce.entities.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

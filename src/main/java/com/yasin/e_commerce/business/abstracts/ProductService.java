@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
 import com.yasin.e_commerce.entities.concretes.Product;
-import com.yasin.e_commerce.entities.dto.ProductWithBrandDto;
-import com.yasin.e_commerce.entities.dto.ProductWithCategoryDto;
+import com.yasin.e_commerce.entities.dto.responses.ProductWithBrandDto;
+import com.yasin.e_commerce.entities.dto.responses.ProductWithCategoryDto;
 
 public interface ProductService {
 	ResponseEntity<DataResult<List<Product>>> getAll();

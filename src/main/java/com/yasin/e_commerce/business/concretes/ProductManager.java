@@ -18,8 +18,8 @@ import com.yasin.e_commerce.core.utilities.results.SuccessResult;
 import com.yasin.e_commerce.dao.abstracts.ProductDao;
 import com.yasin.e_commerce.dao.abstracts.SellerProductDao;
 import com.yasin.e_commerce.entities.concretes.Product;
-import com.yasin.e_commerce.entities.dto.ProductWithBrandDto;
-import com.yasin.e_commerce.entities.dto.ProductWithCategoryDto;
+import com.yasin.e_commerce.entities.dto.responses.ProductWithBrandDto;
+import com.yasin.e_commerce.entities.dto.responses.ProductWithCategoryDto;
 
 @Service
 public class ProductManager implements ProductService {

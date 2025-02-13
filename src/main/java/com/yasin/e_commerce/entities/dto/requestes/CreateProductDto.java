@@ -1,4 +1,4 @@
-package com.yasin.e_commerce.entities.dto;
+package com.yasin.e_commerce.entities.dto.requestes;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
