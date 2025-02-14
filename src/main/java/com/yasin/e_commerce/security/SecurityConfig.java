@@ -15,6 +15,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.yasin.e_commerce.core.EndsWithRequestMatcher;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -39,7 +41,9 @@ public class SecurityConfig {
 				.authorizeHttpRequests(t -> 
 				t
 					.requestMatchers("/api/auth/**").permitAll()
-					.anyRequest().authenticated()
+					.requestMatchers(new EndsWithRequestMatcher("getall"))
+					.hasAnyRole("USER","ADMIN")
+					.requestMatchers(new EndsWithRequestMatcher("add")).hasRole("ADMIN")
 				)
 				.sessionManagement(t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider)
