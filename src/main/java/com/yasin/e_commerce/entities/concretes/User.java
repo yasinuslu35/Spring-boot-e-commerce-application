@@ -3,17 +3,28 @@ package com.yasin.e_commerce.entities.concretes;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.yasin.e_commerce.entities.Role;
+import com.yasin.e_commerce.entities.abstracts.Human;
+
+
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +38,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
+public class User extends Human implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,10 +60,11 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
     
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
+	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+	@JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
+	@Column(name = "role",nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Set<Role> authorities;
     
     @Override
     public boolean isAccountNonExpired() {

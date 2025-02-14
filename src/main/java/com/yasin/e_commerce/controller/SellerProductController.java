@@ -33,7 +33,7 @@ public class SellerProductController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Result> add(@RequestBody SellerProductDto sellerProductDto) {
+	private ResponseEntity<Result> add(@RequestBody SellerProductDto sellerProductDto) {
 		System.out.println("controllerda = "+sellerProductDto);
 		return this.sellerProductService.add(sellerProductDto);
 	}

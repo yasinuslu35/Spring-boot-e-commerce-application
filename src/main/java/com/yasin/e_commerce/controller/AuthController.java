@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yasin.e_commerce.business.concretes.AuthService;
 import com.yasin.e_commerce.business.concretes.JwtService;
+import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.entities.concretes.User;
 import com.yasin.e_commerce.entities.dto.requestes.RegisterUserDto;
 import com.yasin.e_commerce.entities.dto.responses.LoginResponse;
@@ -26,10 +27,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authService.signup(registerUserDto);
+    public ResponseEntity<DataResult<User>> register(@RequestBody RegisterUserDto registerUserDto) {
+        ResponseEntity<DataResult<User>> registeredUser = authService.signup(registerUserDto);
 
-        return ResponseEntity.ok(registeredUser);
+        return registeredUser;
     }
 
     @PostMapping("/login")

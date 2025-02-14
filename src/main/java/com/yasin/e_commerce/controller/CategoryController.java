@@ -31,7 +31,7 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Result> add(@RequestBody Category category) {
+	private ResponseEntity<Result> add(@RequestBody Category category) {
 		return this.categoryService.add(category);
 	}
 	
