@@ -41,8 +41,11 @@ public class SecurityConfig {
 				.authorizeHttpRequests(t -> 
 				t
 					.requestMatchers("/api/auth/**").permitAll()
+					.requestMatchers(new EndsWithRequestMatcher("update"))
+					.hasAnyRole("USER","ADMIN")
 					.requestMatchers(new EndsWithRequestMatcher("getall"))
 					.hasAnyRole("USER","ADMIN")
+
 					.requestMatchers(new EndsWithRequestMatcher("add")).hasRole("ADMIN")
 				)
 				.sessionManagement(t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
