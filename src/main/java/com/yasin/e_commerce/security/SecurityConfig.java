@@ -13,9 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import com.yasin.e_commerce.core.EndsWithRequestMatcher;
+import com.yasin.e_commerce.entities.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -42,9 +43,15 @@ public class SecurityConfig {
 				t
 					.requestMatchers("/api/auth/**").permitAll()
 					.requestMatchers(new EndsWithRequestMatcher("update"))
-					.hasAnyRole("USER","ADMIN")
+					.hasAnyRole(
+							Role.ROLE_ADMIN.getValue(),
+							Role.ROLE_USER.getValue()
+							)
 					.requestMatchers(new EndsWithRequestMatcher("getall"))
-					.hasAnyRole("USER","ADMIN")
+					.hasAnyRole(
+							Role.ROLE_ADMIN.getValue(),
+							Role.ROLE_USER.getValue()
+							)
 
 					.requestMatchers(new EndsWithRequestMatcher("add")).hasRole("ADMIN")
 				)
@@ -55,19 +62,5 @@ public class SecurityConfig {
 				.build();
 	}
 	
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.setAllowedOrigins(List.of("http://localhost:8080"));
-        configuration.setAllowedMethods(List.of("GET","POST"));
-        configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-        source.registerCorsConfiguration("/**",configuration);
-
-        return source;
-    }
 
 }

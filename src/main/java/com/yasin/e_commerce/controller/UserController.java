@@ -23,7 +23,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/update")
-	private ResponseEntity<Result> updateUser(@RequestBody UpdateUserRequestDto userRequestDto) {
+	public ResponseEntity<Result> updateUser(@RequestBody UpdateUserRequestDto userRequestDto) {
 		return this.userService.update(userRequestDto);
 	}
 	

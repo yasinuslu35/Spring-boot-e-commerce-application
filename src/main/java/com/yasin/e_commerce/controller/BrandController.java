@@ -32,7 +32,7 @@ public class BrandController {
 	}
 	
 	@PostMapping("/add")
-	private ResponseEntity<Result> addBrand(@RequestBody BrandRequestDto brandRequestDto) {
+	public ResponseEntity<Result> addBrand(@RequestBody BrandRequestDto brandRequestDto) {
 		return brandService.add(brandRequestDto);
 	}
 

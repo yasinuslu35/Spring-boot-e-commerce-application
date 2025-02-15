@@ -1,6 +1,5 @@
 package com.yasin.e_commerce.core;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +13,7 @@ public class EndsWithRequestMatcher implements RequestMatcher {
 
     @Override
     public boolean matches(HttpServletRequest request) {
-        return request.getRequestURI().endsWith(suffix) && HttpMethod.GET.matches(request.getMethod());
+        return request.getRequestURI().endsWith(suffix);
     }
 }
 

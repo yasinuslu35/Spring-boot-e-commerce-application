@@ -31,7 +31,7 @@ public class SellerController {
 	}
 
 	@PostMapping("/add")
-	private ResponseEntity<Result> add(@RequestBody Seller seller) {
+	public ResponseEntity<Result> add(@RequestBody Seller seller) {
 		return this.sellerService.add(seller);
 	}
 	
