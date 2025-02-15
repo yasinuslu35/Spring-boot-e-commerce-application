@@ -39,6 +39,9 @@ public class AuthService {
         User user = new User();
                 user.setUsername(input.getUsername());
                 user.setPassword(passwordEncoder.encode(input.getPassword()));
+                user.setFirstName(input.getFirstName());
+                user.setLastName(input.getLastName());
+                user.setBirthDate(input.getBirthDate());
                 user.setAuthorities(Set.of(Role.ROLE_USER));
 
         return ResponseEntity.status(HttpStatus.OK).body

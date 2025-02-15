@@ -84,11 +84,4 @@ public class User extends Human implements UserDetails {
         return true;
     }
     
-	/*
-	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-	@JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
-	@Column(name = "role",nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Set<Role> authorities;
-	*/
 }

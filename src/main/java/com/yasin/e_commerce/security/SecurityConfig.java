@@ -1,7 +1,5 @@
 package com.yasin.e_commerce.security;
 
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,9 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import com.yasin.e_commerce.core.EndsWithRequestMatcher;
 import com.yasin.e_commerce.entities.Role;
@@ -53,7 +48,11 @@ public class SecurityConfig {
 							Role.ROLE_USER.getValue()
 							)
 
-					.requestMatchers(new EndsWithRequestMatcher("add")).hasRole("ADMIN")
+					.requestMatchers(new EndsWithRequestMatcher("add"))
+					.hasAnyRole(
+							Role.ROLE_USER.getValue(),
+							Role.ROLE_ADMIN.getValue()
+							)
 				)
 				.sessionManagement(t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider)
