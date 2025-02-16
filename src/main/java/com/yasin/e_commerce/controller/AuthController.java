@@ -21,10 +21,15 @@ public class AuthController {
     private final JwtService jwtService;
     
     private final AuthService authService;
+    
+    public AuthController(
+    		JwtService jwtService,
+    		AuthService authService
 
-    public AuthController(JwtService jwtService, AuthService authService) {
+    		) {
         this.jwtService = jwtService;
         this.authService = authService;
+
     }
 
     @PostMapping("/signup")
@@ -49,5 +54,5 @@ public class AuthController {
 
         return ResponseEntity.ok(loginResponse);
     }
-
+    
 }

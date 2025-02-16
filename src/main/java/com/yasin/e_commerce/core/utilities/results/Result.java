@@ -6,6 +6,7 @@ import lombok.Data;
 public class Result {
 	private boolean success;
 	private String message;
+
 	
 	public Result(boolean success) {
 		this.success = success;

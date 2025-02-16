@@ -27,14 +27,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
+
     public JwtAuthenticationFilter(
         JwtService jwtService,
         UserDetailsService userDetailsService,
         HandlerExceptionResolver handlerExceptionResolver
+	
     ) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
         this.handlerExceptionResolver = handlerExceptionResolver;
+
     }
 
     @Override
@@ -56,7 +59,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+            //useremail var ise ve kullanıcı authentice değilse
             if (userEmail != null && authentication == null) {
+            	
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
                 if (jwtService.isTokenValid(jwt, userDetails)) {
