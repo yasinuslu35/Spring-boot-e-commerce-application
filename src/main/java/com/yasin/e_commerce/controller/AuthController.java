@@ -13,6 +13,7 @@ import com.yasin.e_commerce.entities.concretes.User;
 import com.yasin.e_commerce.entities.dto.requestes.RegisterUserDto;
 import com.yasin.e_commerce.entities.dto.responses.LoginResponse;
 import com.yasin.e_commerce.entities.dto.responses.LoginUserDto;
+import com.yasin.e_commerce.entities.dto.responses.UserResponseDto;
 
 @RequestMapping("/api/auth")
 @RestController
@@ -27,8 +28,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<DataResult<User>> register(@RequestBody RegisterUserDto registerUserDto) {
-        ResponseEntity<DataResult<User>> registeredUser = authService.signup(registerUserDto);
+    public ResponseEntity<DataResult<UserResponseDto>> register(@RequestBody RegisterUserDto registerUserDto) 
+    {
+        ResponseEntity<DataResult<UserResponseDto>> registeredUser = 
+        		authService.signup(registerUserDto);
 
         return registeredUser;
     }
