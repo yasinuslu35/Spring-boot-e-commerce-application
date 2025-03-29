@@ -43,7 +43,7 @@ public class AuthService {
 
     public ResponseEntity<DataResult<UserResponseDto>> signup(RegisterUserDto input) {
     	
-    	if(!input.isPasswordConfirmed()) {
+    	if(!input.isPasswordEqual()) {
     		return ResponseEntity.status
             		(HttpStatus.BAD_REQUEST)
             		.body(new ErrorDataResult<UserResponseDto>

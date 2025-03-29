@@ -37,6 +37,8 @@ public class SecurityConfig {
 				.authorizeHttpRequests(t -> 
 				t
 					.requestMatchers("/api/auth/**").permitAll()
+					.anyRequest().permitAll()
+					/*
 					.requestMatchers(new EndsWithRequestMatcher("update"))
 					.hasAnyRole(
 							Role.ROLE_ADMIN.getValue(),
@@ -53,6 +55,8 @@ public class SecurityConfig {
 							Role.ROLE_USER.getValue(),
 							Role.ROLE_ADMIN.getValue()
 							)
+					*/
+					
 				)
 				.sessionManagement(t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider)
