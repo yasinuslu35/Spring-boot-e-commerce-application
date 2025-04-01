@@ -27,7 +27,7 @@ public class CategoryController {
 	
 	@GetMapping("/getall")
 	public ResponseEntity<DataResult<List<Category>>> getAll() {
-		return this.categoryService.getAll();
+		return categoryService.getAll();
 	}
 	
 	@PostMapping("/add")

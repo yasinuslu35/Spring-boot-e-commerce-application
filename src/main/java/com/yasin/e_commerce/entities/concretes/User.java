@@ -1,18 +1,14 @@
 package com.yasin.e_commerce.entities.concretes;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.yasin.e_commerce.entities.Role;
 import com.yasin.e_commerce.entities.abstracts.Human;
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;

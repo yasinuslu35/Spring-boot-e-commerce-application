@@ -40,14 +40,14 @@ public class ProductManager implements ProductService {
 			return ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
 					.body(new ErrorDataResult<List<Product>>
-					(this.productDao.findAll(),"Hiç Ürün Bulunamadı"));
+					(productDao.findAll(),HttpStatus.BAD_REQUEST.value() ,"Hiç Ürün Bulunamadı"));
 					
 		}
 
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(new SuccessDataResult<List<Product>>
-				(this.productDao.findAll(),"Ürünler listelendi"));
+				(productDao.findAll(),HttpStatus.OK.value(),"Ürünler listelendi"));
 	}
 
 	@Override
@@ -66,8 +66,10 @@ public class ProductManager implements ProductService {
 	public ResponseEntity<Result> add(Product product) {
 	    try {
 	        if (product.getProductName() == null || product.getProductName().trim().isEmpty()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body
-	            		(new ErrorResult("Marka adı boş olamaz!"));
+	            return ResponseEntity
+	            		.status(HttpStatus.BAD_REQUEST)
+	            		.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
+	            				"Marka adı boş olamaz!"));
 	        }
 
 	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
@@ -75,13 +77,17 @@ public class ProductManager implements ProductService {
 	        		(product.getProductName().trim());
 	      
 	        if (existingProductName.isPresent()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body
-	            		(new ErrorResult("Bu isimde bir marka zaten mevcut"));
+	            return ResponseEntity
+	            		.status(HttpStatus.BAD_REQUEST)
+	            		.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
+	            				"Bu isimde bir marka zaten mevcut"));
 	        }
 	        
 	        productDao.save(product);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(
-	        		new SuccessResult("Marka başarıyla eklendi!"));
+	        return ResponseEntity
+	        		.status(HttpStatus.CREATED)
+	        		.body(new SuccessResult(HttpStatus.CREATED.value(),
+	        				"Marka başarıyla eklendi!"));
 
 	    } catch (Exception e) {
 	        // 🛑 Beklenmeyen hata varsa fırlat
@@ -96,7 +102,7 @@ public class ProductManager implements ProductService {
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(new SuccessDataResult<List<ProductWithCategoryDto>>
-		(productDao.getProductWithCategoryDetails(), 
+		(productDao.getProductWithCategoryDetails(),HttpStatus.OK.value(),
 				"Filtreli Ürünler başarıyla listelendi"));
 	}
 
@@ -106,7 +112,8 @@ public class ProductManager implements ProductService {
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(new SuccessDataResult<List<ProductWithBrandDto>>
-		(productDao.findProductsByBrandName(productName),productName + "markasına ait"));
+				(productDao.findProductsByBrandName(productName), 
+				HttpStatus.OK.value() ,productName + "markasına ait"));
 	}
 
 }

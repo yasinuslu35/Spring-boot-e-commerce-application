@@ -2,12 +2,12 @@ package com.yasin.e_commerce.core.utilities.results;
 
 public class SuccessResult extends Result {
 	
-	public SuccessResult() {
-		super(true);
+	public SuccessResult(int statusCode) {
+		super(statusCode);
 	}
 	
-	public SuccessResult(String message) {
-		super(true,message);
+	public SuccessResult(int statusCode,String message) {
+		super(statusCode,message);
 		// TODO Auto-generated constructor stub
 	}
 	

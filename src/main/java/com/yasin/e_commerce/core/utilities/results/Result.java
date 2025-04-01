@@ -4,16 +4,16 @@ import lombok.Data;
 
 @Data
 public class Result {
-	private boolean success;
+	private int statusCode;
 	private String message;
 
 	
-	public Result(boolean success) {
-		this.success = success;
+	public Result(int statusCode) {
+		this.statusCode = statusCode;
 	}
 	
-	public Result(boolean success, String message) {
-		this(success);
+	public Result(int statusCode, String message) {
+		this(statusCode);
 		this.message = message;
 	}
 }

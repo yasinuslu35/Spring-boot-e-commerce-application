@@ -34,8 +34,8 @@ public class CategoryManager implements CategoryService {
 		try {
 			return ResponseEntity.
 					status(HttpStatus.OK)
-					.body(new SuccessDataResult<List<Category>>(this.categoryDao.findAll(),
-							"Kategori Başarıyla Eklendi."));
+					.body(new SuccessDataResult<List<Category>>
+					(categoryDao.findAll(),HttpStatus.OK.value(),"Kategori Başarıyla Eklendi."));
 					
 		}
 		catch (Exception e) {
@@ -49,19 +49,28 @@ public class CategoryManager implements CategoryService {
 	    try {
 	        // 1️⃣ VALIDASYON: Marka ismi boş mu?
 	        if (category.getCategoryName() == null || category.getCategoryName().trim().isEmpty()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult("Marka adı boş olamaz!"));
+	            return ResponseEntity
+	            		.status(HttpStatus.BAD_REQUEST)
+	            		.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
+	            				"Marka adı boş olamaz!"));
 	        }
 
 	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
 	        Optional<Brand> existingBrand = categoryDao.findByCategoryName(category.getCategoryName().trim());
 
 	        if (existingBrand.isPresent()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult("Bu isimde bir marka zaten mevcut"));
+	            return ResponseEntity
+	            		.status(HttpStatus.BAD_REQUEST)
+	            		.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
+	            				"Bu isimde bir marka zaten mevcut"));
 	        }
 
 	        // 3️⃣ Veritabanına kayıt işlemi
 	        categoryDao.save(category);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResult("Marka başarıyla eklendi!"));
+	        return ResponseEntity
+	        		.status(HttpStatus.CREATED)
+	        		.body(new SuccessResult(HttpStatus.CREATED.value(),
+	        				"Marka başarıyla eklendi!"));
 
 	    } catch (Exception e) {
 	        // 🛑 Beklenmeyen hata varsa fırlat

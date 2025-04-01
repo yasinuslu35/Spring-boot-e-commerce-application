@@ -58,14 +58,14 @@ public class SellerProductManager implements SellerProductService {
 			return ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
 					.body(new ErrorDataResult<List<SellerProductDto>>
-					(sellerProductDtos,"Hiç Ürün Bulunamadı"));
+					(sellerProductDtos,HttpStatus.BAD_REQUEST.value(),"Hiç Ürün Bulunamadı"));
 					
 		}
 
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(new SuccessDataResult<List<SellerProductDto>>
-				(sellerProductDtos,"Ürünler listelendi"));
+				(sellerProductDtos,HttpStatus.OK.value(),"Ürünler listelendi"));
 	}
 
 	@Override
@@ -90,8 +90,10 @@ public class SellerProductManager implements SellerProductService {
 	        
 
 	        sellerProductDao.save(sellerProduct);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(
-	        		new SuccessResult("Marka başarıyla eklendi!"));
+	        return ResponseEntity
+	        		.status(HttpStatus.CREATED)
+	        		.body(new SuccessResult(HttpStatus.CREATED.value(),
+	        				"Marka başarıyla eklendi!"));
 
 	    } catch (Exception e) {
 

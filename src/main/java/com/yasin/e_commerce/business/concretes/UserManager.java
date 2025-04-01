@@ -47,8 +47,9 @@ public class UserManager implements UserService {
         
         System.out.println("user = "+user);
         userDao.save(user);
-        return ResponseEntity.status(HttpStatus.OK).body(
-        		new SuccessResult("Kullanıcı başarıyla güncellendi!"));
+        return ResponseEntity
+        		.status(HttpStatus.OK)
+        		.body(new SuccessResult(HttpStatus.OK.value(),"Kullanıcı başarıyla güncellendi!"));
 	}
 
 }

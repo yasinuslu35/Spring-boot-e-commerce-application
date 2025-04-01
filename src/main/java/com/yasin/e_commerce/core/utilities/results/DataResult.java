@@ -5,13 +5,13 @@ public class DataResult<T> extends Result{
 
 	private T data;
 	
-	public DataResult(T data, boolean success, String message) {
-		super(success, message);
+	public DataResult(T data, int statusCode, String message) {
+		super(statusCode, message);
 		this.data = data;
 	}
 	
-	public DataResult(T data, boolean success) {
-		super(success);
+	public DataResult(T data, int statusCode) {
+		super(statusCode);
 		this.data = data;
 	}
 	

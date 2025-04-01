@@ -37,14 +37,14 @@ public class SellerManager implements SellerService {
 			return ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
 					.body(new ErrorDataResult<List<Seller>>
-					(this.sellerDao.findAll(),"Hiç Ürün Bulunamadı"));
+					(sellerDao.findAll(),HttpStatus.BAD_REQUEST.value(),"Hiç Ürün Bulunamadı"));
 					
 		}
 
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(new SuccessDataResult<List<Seller>>
-				(this.sellerDao.findAll(),"Ürünler listelendi"));
+				(sellerDao.findAll(),HttpStatus.OK.value(),"Ürünler listelendi"));
 	}
 
 	@Override
@@ -52,19 +52,28 @@ public class SellerManager implements SellerService {
 	    try {
 	        // 1️⃣ VALIDASYON: Marka ismi boş mu?
 	        if (supplier.getCompanyName() == null || supplier.getCompanyName().trim().isEmpty()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult("Marka adı boş olamaz!"));
+	            return ResponseEntity
+	            		.status(HttpStatus.BAD_REQUEST)
+	            		.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
+	            				"Marka adı boş olamaz!"));
 	        }
 
 	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
 	        Optional<Seller> existingBrand = sellerDao.findByCompanyName(supplier.getCompanyName().trim());
 
 	        if (existingBrand.isPresent()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult("Bu isimde bir marka zaten mevcut"));
+	            return ResponseEntity
+	            		.status(HttpStatus.BAD_REQUEST)
+	            		.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
+	            				"Bu isimde bir marka zaten mevcut"));
 	        }
 
 	        // 3️⃣ Veritabanına kayıt işlemi
 	        sellerDao.save(supplier);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResult("Marka başarıyla eklendi!"));
+	        return ResponseEntity
+	        		.status(HttpStatus.CREATED)
+	        		.body(new SuccessResult(HttpStatus.CREATED.value(),
+	        				"Marka başarıyla eklendi!"));
 
 	    } catch (Exception e) {
 	        // 🛑 Beklenmeyen hata varsa fırlat

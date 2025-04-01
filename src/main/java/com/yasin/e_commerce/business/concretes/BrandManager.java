@@ -25,12 +25,12 @@ import com.yasin.e_commerce.entities.dto.responses.BrandResponseDto;
 import jakarta.transaction.Transactional;
 
 @Service
-public class BrandManager implements BrandService{
+public class BrandManager implements BrandService {
 
 	private final BrandDao brandDao;
 	private final ModelMapperService modelMapperService;
-	
-	public BrandManager(BrandDao brandDao,ModelMapperService modelMapperService) {
+
+	public BrandManager(BrandDao brandDao, ModelMapperService modelMapperService) {
 		super();
 		this.brandDao = brandDao;
 		this.modelMapperService = modelMapperService;
@@ -39,56 +39,59 @@ public class BrandManager implements BrandService{
 	@Override
 	public ResponseEntity<DataResult<List<BrandResponseDto>>> getAll() {
 		List<Brand> brands = brandDao.findAll();
-		
+
 		List<BrandResponseDto> brandResponseDto = brands.stream()
-				.map(brand -> this.modelMapperService.forResponse()
-				.map(brand, BrandResponseDto.class))
+				.map(brand -> this.modelMapperService.forResponse().map(brand, BrandResponseDto.class))
 				.collect(Collectors.toList());
-		
-		if(brands.isEmpty()) {
+
+		if (brands.isEmpty()) {
 			return ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
 					.body(new ErrorDataResult<List<BrandResponseDto>>
-					(brandResponseDto,"Hiç Marka Bulunamadı"));
-					
+					(brandResponseDto,HttpStatus.BAD_REQUEST.value() ,"Hiç Marka Bulunamadı"));
+
 		}
 
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(new SuccessDataResult<List<BrandResponseDto>>
-				(brandResponseDto,"Markalar listelendi"));
+				(brandResponseDto,HttpStatus.OK.value() ,"Markalar listelendi"));
 	}
 
 	@Override
 	@Transactional
 	public ResponseEntity<Result> add(BrandRequestDto brandRequestDto) {
-	    try {
-	        // 1️⃣ VALIDASYON: Marka ismi boş mu?
-	        if (brandRequestDto.getBrandName() == null || 
-	        		brandRequestDto.getBrandName().trim().isEmpty()) {
-	            return ResponseEntity.status
-	            		(HttpStatus.BAD_REQUEST).body(new ErrorResult("Marka adı boş olamaz!"));
-	        }
+		try {
+			// 1️⃣ VALIDASYON: Marka ismi boş mu?
+			if (brandRequestDto.getBrandName() == null || brandRequestDto.getBrandName().trim().isEmpty()) {
+				return ResponseEntity
+						.status(HttpStatus.BAD_REQUEST)
+						.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
+								"Marka adı boş olamaz!"));
+			}
 
-	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
-	        Optional<Brand> existingBrand = brandDao.findByBrandName
-	        		(brandRequestDto.getBrandName().trim());
+			// 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
+			Optional<Brand> existingBrand = brandDao.findByBrandName(brandRequestDto.getBrandName().trim());
 
-	        if (existingBrand.isPresent()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	            		.body(new ErrorResult("Bu isimde bir marka zaten mevcut"));
-	        }
+			if (existingBrand.isPresent()) {
+				return ResponseEntity
+						.status(HttpStatus.BAD_REQUEST)
+						.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
+								"Bu isimde bir marka zaten mevcut"));
+			}
 
 			Brand brand = this.modelMapperService.forRequest().map(brandRequestDto, Brand.class);
-	        
-	        brandDao.save(brand);
-	        return ResponseEntity.status(HttpStatus.CREATED).body
-	        		(new SuccessResult("Marka başarıyla eklendi!"));
 
-	    } catch (Exception e) {
-	        // 🛑 Beklenmeyen hata varsa fırlat
-	        throw new BusinessException("Marka eklenirken bir hata oluştu: " + e.getMessage());
-	    }
+			brandDao.save(brand);
+			return ResponseEntity
+					.status(HttpStatus.CREATED)
+					.body(new SuccessResult(HttpStatus.CREATED.value(),
+							"Marka başarıyla eklendi!"));
+
+		} catch (Exception e) {
+			// 🛑 Beklenmeyen hata varsa fırlat
+			throw new BusinessException("Marka eklenirken bir hata oluştu: " + e.getMessage());
+		}
 	}
 
 }
