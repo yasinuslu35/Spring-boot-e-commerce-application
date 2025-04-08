@@ -13,6 +13,7 @@ import com.yasin.e_commerce.business.abstracts.SellerService;
 import com.yasin.e_commerce.core.utilities.results.DataResult;
 import com.yasin.e_commerce.core.utilities.results.Result;
 import com.yasin.e_commerce.entities.concretes.Seller;
+import com.yasin.e_commerce.entities.dto.responses.SellerResponseDto;
 
 @RestController
 @RequestMapping("/api/sellers")
@@ -26,7 +27,7 @@ public class SellerController {
 	}
 	
 	@GetMapping("/getall")
-	public ResponseEntity<DataResult<List<Seller>>> getAll() {
+	public ResponseEntity<DataResult<List<SellerResponseDto>>> getAll() {
 		return this.sellerService.getAll();
 	}
 

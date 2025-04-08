@@ -1,4 +1,4 @@
-package com.yasin.e_commerce.entities.dto;
+package com.yasin.e_commerce.entities.dto.requestes;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SellerProductDto {
+public class SellerProductRequestDto {
     private String sellerName;
     private String productName;
     private String quantityPerUnit;

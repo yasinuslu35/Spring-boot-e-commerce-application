@@ -29,6 +29,14 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 			+ "(p.productName, p.brand.brandName) "+
 			"FROM Product p WHERE p.brand.brandName = :brandName")
 	List<ProductWithBrandDto> findProductsByBrandName(@Param("brandName") String brandName);
+	
+	/*
+	@Query("SELECT new com.yasin.e_commerce.entities.dto.responses.ProductWithBrandDto "
+			+ "(p.productName, p.brand.brandName) "+
+			"FROM Product p WHERE p.brand.brandName = :brandName")
+	//List<ProductWithBrandDto> addProduct();
+	 
+	 */
 
 	
 

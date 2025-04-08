@@ -30,7 +30,7 @@ public class AuthService {
 	private final AuthenticationManager authenticationManager;
 	private final ModelMapperService modelMapperService;
 
-	private JwtService jwtService;
+	private final JwtService jwtService;
 
 	public AuthService(UserDao userRepository, JwtService jwtService, AuthenticationManager authenticationManager,
 			PasswordEncoder passwordEncoder, ModelMapperService modelMapperService) {

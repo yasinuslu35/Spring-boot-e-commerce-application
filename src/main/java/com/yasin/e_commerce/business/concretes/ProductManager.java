@@ -16,7 +16,6 @@ import com.yasin.e_commerce.core.utilities.results.Result;
 import com.yasin.e_commerce.core.utilities.results.SuccessDataResult;
 import com.yasin.e_commerce.core.utilities.results.SuccessResult;
 import com.yasin.e_commerce.dao.abstracts.ProductDao;
-import com.yasin.e_commerce.dao.abstracts.SellerProductDao;
 import com.yasin.e_commerce.entities.concretes.Product;
 import com.yasin.e_commerce.entities.dto.responses.ProductWithBrandDto;
 import com.yasin.e_commerce.entities.dto.responses.ProductWithCategoryDto;
@@ -24,9 +23,9 @@ import com.yasin.e_commerce.entities.dto.responses.ProductWithCategoryDto;
 @Service
 public class ProductManager implements ProductService {
 	
-	private ProductDao productDao;
+	private final ProductDao productDao;
 	
-	public ProductManager(ProductDao productDao, SellerProductDao sellerProductDao) {
+	public ProductManager(ProductDao productDao) {
 		super();
 		this.productDao = productDao;
 	}

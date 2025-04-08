@@ -21,7 +21,7 @@ import com.yasin.e_commerce.entities.concretes.Category;
 @Service
 public class CategoryManager implements CategoryService {
 	
-	private CategoryDao categoryDao;
+	private final CategoryDao categoryDao;
 	
 	public CategoryManager(CategoryDao categoryDao) {
 		super();
@@ -56,9 +56,9 @@ public class CategoryManager implements CategoryService {
 	        }
 
 	        // 2️⃣ İŞ KURALI: Aynı isimde marka var mı kontrol et
-	        Optional<Brand> existingBrand = categoryDao.findByCategoryName(category.getCategoryName().trim());
+	        Optional<Category> existingCategory = categoryDao.findByCategoryName(category.getCategoryName().trim());
 
-	        if (existingBrand.isPresent()) {
+	        if (existingCategory.isPresent()) {
 	            return ResponseEntity
 	            		.status(HttpStatus.BAD_REQUEST)
 	            		.body(new ErrorResult(HttpStatus.BAD_REQUEST.value(),
