@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 //@JsonIgnoreProperties({"hibernateLazyInitializer","handler","products"})
 public class BrandResponseDto {
+	private long id;
 	private String brandName;
 	private List<ProductResponseDto> products;
 
